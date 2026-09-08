@@ -1,0 +1,69 @@
+@ClinicaVeterinariaAPI_HostAddress = http://localhost:5237
+
+POST {{ClinicaVeterinariaAPI_HostAddress}}/api/usuarios/registro?password=claveSegura123
+Content-Type: application/json
+
+{
+  "nombre": "Ana Morales",
+  "email": "ana.morales@gmail.com",
+  "rol": "Cliente"
+}
+
+POST {{ClinicaVeterinariaAPI_HostAddress}}/api/usuarios/login
+Content-Type: application/json
+
+{
+  "email": "ana.morales@gmail.com",
+  "password": "claveSegura123"
+}
+
+GET {{ClinicaVeterinariaAPI_HostAddress}}/api/usuarios
+Accept: application/json
+
+GET {{ClinicaVeterinariaAPI_HostAddress}}/api/mascotas
+Accept: application/json
+
+GET {{ClinicaVeterinariaAPI_HostAddress}}/api/mascotas/1
+Accept: application/json
+
+GET {{ClinicaVeterinariaAPI_HostAddress}}/api/mascotas/Firu
+Accept: application/json
+
+POST {{ClinicaVeterinariaAPI_HostAddress}}/api/mascotas
+Content-Type: application/json
+
+{
+  "nombre": "Pelusa",
+  "especie": "Gato",
+  "dueñoId": 2
+}
+
+GET {{ClinicaVeterinariaAPI_HostAddress}}/api/citas
+Accept: application/json
+
+POST {{ClinicaVeterinariaAPI_HostAddress}}/api/citas
+Content-Type: application/json
+
+{
+  "mascotaId": 1,
+  "fecha": "2026-09-15T10:00:00",
+  "motivo": "Control post-operatorio"
+}
+
+
+GET {{ClinicaVeterinariaAPI_HostAddress}}/api/tratamientos
+Accept: application/json
+
+
+POST {{ClinicaVeterinariaAPI_HostAddress}}/api/tratamientos
+Content-Type: application/json
+
+{
+  "citaId": 1,
+  "descripcion": "Inyección antibiótica y limpieza",
+  "costo": 18500.00
+}
+
+
+GET {{ClinicaVeterinariaAPI_HostAddress}}/api/roles
+Accept: application/json

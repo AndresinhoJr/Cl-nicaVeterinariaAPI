@@ -1,0 +1,25 @@
+﻿## Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+## Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+## IDEs
+.vscode/
+.idea/
+
+## Exclude other workspace / duplicate directories
+WorkSpaceHub/
+Evaluacion 1/
+
+## OS generated
+.DS_Store
+Thumbs.db
