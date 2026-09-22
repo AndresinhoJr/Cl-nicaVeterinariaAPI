@@ -70,6 +70,22 @@ builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true
 builder.Services.AddProblemDetails();
 builder.Services.AddOpenApi();
 
+// CORS — permite que el frontend React (Vite) pueda llamar a la API
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy
+            .WithOrigins(
+                "http://localhost:5173",   // Vite dev server
+                "http://localhost:4173"    // Vite preview
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
 app.UseMiddleware<GlobalExceptionMiddleware>();
@@ -87,7 +103,13 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+// Aplicar CORS antes de cualquier redirección, autenticación y autorización
+app.UseCors("FrontendPolicy");
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseRateLimiter();
 
@@ -100,6 +122,29 @@ app.MapMascotaEndpoints();
 app.MapCitaEndpoints();
 app.MapTratamientoEndpoints();
 app.MapRolEndpoints();
+
+// Seed de usuario Administrador en desarrollo si no existe
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetService<ClinicaDbContext>();
+    if (context != null && !app.Environment.IsEnvironment("Testing"))
+    {
+        var admin = context.Usuarios.FirstOrDefault(u => u.Email == "admin@veterinaria.com");
+        if (admin == null)
+        {
+            var hasher = new Microsoft.AspNetCore.Identity.PasswordHasher<Usuario>();
+            var newAdmin = new Usuario
+            {
+                Nombre = "Administrador",
+                Email = "admin@veterinaria.com",
+                Rol = "Admin"
+            };
+            newAdmin.PasswordHash = hasher.HashPassword(newAdmin, "admin123");
+            context.Usuarios.Add(newAdmin);
+            context.SaveChanges();
+        }
+    }
+}
 
 app.Run();
 

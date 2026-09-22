@@ -14,6 +14,18 @@ public static class TratamientoApi
             .RequireAuthorization()
             .WithTags("Tratamientos Médicos");
 
+        group.MapGet("/", async (
+            ClaimsPrincipal user,
+            ITratamientoService tratamientoService) =>
+        {
+            var (userId, userRole) = ObtenerIdentidad(user);
+            var tratamientos = await tratamientoService.GetAllAsync(userId, userRole);
+            return Results.Ok(tratamientos);
+        })
+        .WithName("ObtenerTodosLosTratamientos")
+        .Produces<IEnumerable<TratamientoResponseDto>>(StatusCodes.Status200OK)
+        .Produces(StatusCodes.Status401Unauthorized);
+
         group.MapGet("/cita/{citaId:int}", async (
             int citaId,
             ClaimsPrincipal user,
@@ -24,6 +36,21 @@ public static class TratamientoApi
             return Results.Ok(tratamientos);
         })
         .WithName("ObtenerTratamientosPorCita")
+        .Produces<IEnumerable<TratamientoResponseDto>>(StatusCodes.Status200OK)
+        .Produces(StatusCodes.Status401Unauthorized)
+        .Produces(StatusCodes.Status403Forbidden)
+        .Produces(StatusCodes.Status404NotFound);
+
+        group.MapGet("/mascota/{mascotaId:int}", async (
+            int mascotaId,
+            ClaimsPrincipal user,
+            ITratamientoService tratamientoService) =>
+        {
+            var (userId, userRole) = ObtenerIdentidad(user);
+            var tratamientos = await tratamientoService.GetByMascotaIdAsync(mascotaId, userId, userRole);
+            return Results.Ok(tratamientos);
+        })
+        .WithName("ObtenerTratamientosPorMascota")
         .Produces<IEnumerable<TratamientoResponseDto>>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status401Unauthorized)
         .Produces(StatusCodes.Status403Forbidden)

@@ -7,10 +7,11 @@ public class CitaResponseDto
     public string NombreMascota { get; set; } = string.Empty;
     public string EspecieMascota { get; set; } = string.Empty;
     public int DueñoId { get; set; }
+    public int DuenoId => DueñoId;
     public string NombreDueño { get; set; } = string.Empty;
+    public string NombreDueno => NombreDueño;
     public DateTime Fecha { get; set; }
     public string Motivo { get; set; } = string.Empty;
     public int TotalTratamientos { get; set; }
     public decimal CostoTotalTratamientos { get; set; }
 }
-

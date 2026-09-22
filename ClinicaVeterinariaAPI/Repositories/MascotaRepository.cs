@@ -31,7 +31,7 @@ public class MascotaRepository : Repository<Mascota>, IMascotaRepository
 
         var totalCount = await query.CountAsync();
         var items = await query
-            .OrderBy(m => m.Id)
+            .OrderByDescending(m => m.Id)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();

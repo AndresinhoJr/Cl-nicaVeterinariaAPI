@@ -2,6 +2,7 @@ using System.Security.Claims;
 using ClinicaVeterinariaAPI.DTOs.Common;
 using ClinicaVeterinariaAPI.DTOs.Mascotas;
 using ClinicaVeterinariaAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClinicaVeterinariaAPI.Endpoints;
@@ -62,7 +63,8 @@ public static class MascotaApi
         .WithValidation<MascotaCreateDto>()
         .Produces<MascotaResponseDto>(StatusCodes.Status201Created)
         .Produces(StatusCodes.Status400BadRequest)
-        .Produces(StatusCodes.Status401Unauthorized);
+        .Produces(StatusCodes.Status401Unauthorized)
+        .Produces(StatusCodes.Status403Forbidden);
 
         group.MapPut("/{id:int}", async (
             int id,
@@ -79,6 +81,7 @@ public static class MascotaApi
 
             return Results.Ok(actualizada);
         })
+        .RequireAuthorization(new AuthorizeAttribute { Roles = "Admin,Veterinario" })
         .WithName("ActualizarMascota")
         .WithValidation<MascotaUpdateDto>()
         .Produces<MascotaResponseDto>(StatusCodes.Status200OK)
@@ -101,6 +104,7 @@ public static class MascotaApi
 
             return Results.NoContent();
         })
+        .RequireAuthorization(new AuthorizeAttribute { Roles = "Admin" })
         .WithName("EliminarMascota")
         .Produces(StatusCodes.Status204NoContent)
         .Produces(StatusCodes.Status401Unauthorized)

@@ -91,6 +91,131 @@ public class AuthService : IAuthService
         return GenerarTokenJwt(nuevoUsuario);
     }
 
+    public async Task<ClienteDto> CrearClienteAsync(CrearUsuarioDto request)
+    {
+        var existente = await _unitOfWork.Usuarios.GetByEmailAsync(request.Email);
+        if (existente != null)
+        {
+            throw new InvalidOperationException("El correo electrónico ya se encuentra registrado.");
+        }
+
+        var password = string.IsNullOrWhiteSpace(request.Password) ? "cliente123" : request.Password.Trim();
+
+        var nuevoCliente = new Usuario
+        {
+            Nombre = request.Nombre.Trim(),
+            Email = request.Email.ToLower().Trim(),
+            Rol = "Cliente"
+        };
+
+        nuevoCliente.PasswordHash = _hasher.HashPassword(nuevoCliente, password);
+
+        await _unitOfWork.Usuarios.AddAsync(nuevoCliente);
+        await _unitOfWork.CommitAsync();
+
+        return new ClienteDto
+        {
+            Id = nuevoCliente.Id,
+            Nombre = nuevoCliente.Nombre,
+            Email = nuevoCliente.Email
+        };
+    }
+
+    public async Task<UsuarioDto> CrearVeterinarioAsync(CrearUsuarioDto request)
+    {
+        var existente = await _unitOfWork.Usuarios.GetByEmailAsync(request.Email);
+        if (existente != null)
+        {
+            throw new InvalidOperationException("El correo electrónico ya se encuentra registrado.");
+        }
+
+        var password = string.IsNullOrWhiteSpace(request.Password) ? "vet123" : request.Password.Trim();
+
+        var nuevoVet = new Usuario
+        {
+            Nombre = request.Nombre.Trim(),
+            Email = request.Email.ToLower().Trim(),
+            Rol = "Veterinario"
+        };
+
+        nuevoVet.PasswordHash = _hasher.HashPassword(nuevoVet, password);
+
+        await _unitOfWork.Usuarios.AddAsync(nuevoVet);
+        await _unitOfWork.CommitAsync();
+
+        return new UsuarioDto
+        {
+            Id = nuevoVet.Id,
+            Nombre = nuevoVet.Nombre,
+            Email = nuevoVet.Email,
+            Rol = nuevoVet.Rol
+        };
+    }
+
+    public async Task<bool> CambiarPasswordAsync(int userId, string passwordActual, string nuevoPassword)
+    {
+        var usuario = await _unitOfWork.Usuarios.GetByIdAsync(userId);
+        if (usuario == null)
+        {
+            throw new KeyNotFoundException("Usuario no encontrado.");
+        }
+
+        if (string.IsNullOrWhiteSpace(passwordActual))
+        {
+            throw new InvalidOperationException("Debes ingresar la contraseña actual.");
+        }
+
+        if (string.IsNullOrWhiteSpace(nuevoPassword) || nuevoPassword.Trim().Length < 4)
+        {
+            throw new InvalidOperationException("La nueva contraseña debe tener al menos 4 caracteres.");
+        }
+
+        // Si el usuario ya tiene hash en la base de datos, verificarlo rigurosamente
+        if (!string.IsNullOrEmpty(usuario.PasswordHash))
+        {
+            var res = _hasher.VerifyHashedPassword(usuario, usuario.PasswordHash, passwordActual.Trim());
+            if (res == PasswordVerificationResult.Failed && usuario.PasswordHash != passwordActual.Trim())
+            {
+                throw new InvalidOperationException("La contraseña actual es incorrecta.");
+            }
+        }
+        else
+        {
+            // Si el usuario no tenía hash previo (cuenta recién migrada), exigir la contraseña por defecto de su rol
+            var expectedDefault = usuario.Rol switch
+            {
+                "Admin" => "admin123",
+                "Veterinario" => "vet123",
+                _ => "cliente123"
+            };
+
+            if (passwordActual.Trim() != expectedDefault)
+            {
+                throw new InvalidOperationException("La contraseña actual es incorrecta.");
+            }
+        }
+
+        usuario.PasswordHash = _hasher.HashPassword(usuario, nuevoPassword.Trim());
+        await _unitOfWork.CommitAsync();
+        return true;
+    }
+
+
+    public async Task<IEnumerable<UsuarioDto>> ObtenerTodosUsuariosAsync()
+    {
+        var usuarios = await _unitOfWork.Usuarios.GetAllAsync();
+        return usuarios
+            .OrderBy(u => u.Rol)
+            .ThenBy(u => u.Nombre)
+            .Select(u => new UsuarioDto
+            {
+                Id = u.Id,
+                Nombre = u.Nombre,
+                Email = u.Email,
+                Rol = u.Rol ?? "Cliente"
+            });
+    }
+
     private LoginResponseDto GenerarTokenJwt(Usuario usuario)
     {
         var jwtKey = _configuration["Jwt:Key"] ?? "Mi_super-clave_ultra-secreta1234_:)";

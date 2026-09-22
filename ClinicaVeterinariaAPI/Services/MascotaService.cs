@@ -60,9 +60,29 @@ public class MascotaService : IMascotaService
 
     public async Task<MascotaResponseDto> CreateAsync(MascotaCreateDto dto, int currentUserId, string currentUserRole)
     {
-        int idDueñoAsignado = (currentUserRole.Equals("Admin", StringComparison.OrdinalIgnoreCase) && dto.DueñoId.HasValue)
-            ? dto.DueñoId.Value
-            : currentUserId;
+        int idDueñoAsignado;
+        bool esAdminOVet = currentUserRole.Equals("Admin", StringComparison.OrdinalIgnoreCase) ||
+                           currentUserRole.Equals("Veterinario", StringComparison.OrdinalIgnoreCase);
+
+        if (esAdminOVet)
+        {
+            if (!dto.DueñoId.HasValue || dto.DueñoId.Value <= 0)
+            {
+                throw new ArgumentException("Debe seleccionar un dueño para registrar la mascota.");
+            }
+
+            var dueño = await _unitOfWork.Usuarios.GetByIdAsync(dto.DueñoId.Value);
+            if (dueño == null)
+            {
+                throw new KeyNotFoundException($"El cliente con id {dto.DueñoId.Value} no existe.");
+            }
+
+            idDueñoAsignado = dto.DueñoId.Value;
+        }
+        else
+        {
+            idDueñoAsignado = currentUserId;
+        }
 
         var nuevaMascota = new Mascota
         {
@@ -83,7 +103,10 @@ public class MascotaService : IMascotaService
         var mascota = await _unitOfWork.Mascotas.GetByIdWithDueñoAsync(id);
         if (mascota == null) return null;
 
-        if (!currentUserRole.Equals("Admin", StringComparison.OrdinalIgnoreCase) && mascota.DueñoId != currentUserId)
+        bool esAdminOVet = currentUserRole.Equals("Admin", StringComparison.OrdinalIgnoreCase) ||
+                           currentUserRole.Equals("Veterinario", StringComparison.OrdinalIgnoreCase);
+
+        if (!esAdminOVet && mascota.DueñoId != currentUserId)
         {
             throw new UnauthorizedAccessException("Acceso denegado: No tiene permisos para modificar esta mascota.");
         }
@@ -91,10 +114,20 @@ public class MascotaService : IMascotaService
         mascota.Nombre = dto.Nombre.Trim();
         mascota.Especie = dto.Especie.Trim();
 
+        if (esAdminOVet && dto.DueñoId.HasValue && dto.DueñoId.Value > 0)
+        {
+            var dueño = await _unitOfWork.Usuarios.GetByIdAsync(dto.DueñoId.Value);
+            if (dueño != null)
+            {
+                mascota.DueñoId = dto.DueñoId.Value;
+            }
+        }
+
         _unitOfWork.Mascotas.Update(mascota);
         await _unitOfWork.CommitAsync();
 
-        return MapearADto(mascota);
+        var actualizada = await _unitOfWork.Mascotas.GetByIdWithDueñoAsync(mascota.Id);
+        return MapearADto(actualizada!);
     }
 
     public async Task<bool> DeleteAsync(int id, int currentUserId, string currentUserRole)
@@ -102,7 +135,10 @@ public class MascotaService : IMascotaService
         var mascota = await _unitOfWork.Mascotas.GetByIdAsync(id);
         if (mascota == null) return false;
 
-        if (!currentUserRole.Equals("Admin", StringComparison.OrdinalIgnoreCase) && mascota.DueñoId != currentUserId)
+        bool esAdminOVet = currentUserRole.Equals("Admin", StringComparison.OrdinalIgnoreCase) ||
+                           currentUserRole.Equals("Veterinario", StringComparison.OrdinalIgnoreCase);
+
+        if (!esAdminOVet && mascota.DueñoId != currentUserId)
         {
             throw new UnauthorizedAccessException("Acceso denegado: No tiene permisos para eliminar esta mascota.");
         }

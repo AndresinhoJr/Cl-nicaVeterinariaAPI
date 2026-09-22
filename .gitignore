@@ -1,4 +1,4 @@
-﻿## Build results
+## Build results
 [Bb]in/
 [Oo]bj/
 [Ll]og/
@@ -19,6 +19,17 @@
 ## Exclude other workspace / duplicate directories
 WorkSpaceHub/
 Evaluacion 1/
+.agents/
+
+## Node / Frontend
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+frontend/.env.local
+frontend/.env.*.local
+frontend/playwright-report/
+frontend/test-results/
 
 ## OS generated
 .DS_Store

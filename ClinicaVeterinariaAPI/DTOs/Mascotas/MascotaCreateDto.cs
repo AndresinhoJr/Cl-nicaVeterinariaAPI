@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ClinicaVeterinariaAPI.DTOs.Mascotas;
 
@@ -16,6 +17,9 @@ public class MascotaCreateDto : IValidatableObject
 
     public int? DueñoId { get; set; }
 
+    [JsonPropertyName("duenoId")]
+    public int? DuenoId { get => DueñoId; set => DueñoId = value; }
+
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         if (!EspeciesValidas.Contains(Especie, StringComparer.OrdinalIgnoreCase))
@@ -27,4 +31,3 @@ public class MascotaCreateDto : IValidatableObject
         }
     }
 }
-

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace ClinicaVeterinariaAPI.DTOs.Mascotas;
 
@@ -14,6 +15,11 @@ public class MascotaUpdateDto : IValidatableObject
     [StringLength(50, ErrorMessage = "La especie no puede exceder 50 caracteres.")]
     public string Especie { get; set; } = string.Empty;
 
+    public int? DueñoId { get; set; }
+
+    [JsonPropertyName("duenoId")]
+    public int? DuenoId { get => DueñoId; set => DueñoId = value; }
+
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
         if (!EspeciesValidas.Contains(Especie, StringComparer.OrdinalIgnoreCase))
@@ -25,4 +31,3 @@ public class MascotaUpdateDto : IValidatableObject
         }
     }
 }
-

@@ -13,6 +13,27 @@ public class TratamientoService : ITratamientoService
         _unitOfWork = unitOfWork;
     }
 
+    public async Task<IEnumerable<TratamientoResponseDto>> GetAllAsync(int currentUserId, string currentUserRole)
+    {
+        int? duenoId = (currentUserRole.Equals("Admin", StringComparison.OrdinalIgnoreCase) ||
+                        currentUserRole.Equals("Veterinario", StringComparison.OrdinalIgnoreCase))
+            ? null
+            : currentUserId;
+
+        var tratamientos = await _unitOfWork.Tratamientos.GetAllWithDetailsAsync(duenoId);
+
+        return tratamientos.Select(t => new TratamientoResponseDto
+        {
+            Id = t.Id,
+            CitaId = t.CitaId,
+            MascotaId = t.CitaNavigation?.MascotaId ?? 0,
+            Descripcion = t.Descripcion,
+            Costo = t.Costo,
+            FechaCita = t.CitaNavigation?.Fecha ?? DateTime.MinValue,
+            NombreMascota = t.CitaNavigation?.MascotaNavigation?.Nombre ?? "N/A"
+        });
+    }
+
     public async Task<IEnumerable<TratamientoResponseDto>> GetByCitaIdAsync(int citaId, int currentUserId, string currentUserRole)
     {
         var cita = await _unitOfWork.Citas.GetByIdWithDetailsAsync(citaId);
@@ -34,11 +55,48 @@ public class TratamientoService : ITratamientoService
         {
             Id = t.Id,
             CitaId = t.CitaId,
+            MascotaId = cita.MascotaId,
             Descripcion = t.Descripcion,
             Costo = t.Costo,
             FechaCita = cita.Fecha,
             NombreMascota = cita.MascotaNavigation?.Nombre ?? "N/A"
         });
+    }
+
+    public async Task<IEnumerable<TratamientoResponseDto>> GetByMascotaIdAsync(int mascotaId, int currentUserId, string currentUserRole)
+    {
+        var mascota = await _unitOfWork.Mascotas.GetByIdWithDueñoAsync(mascotaId);
+        if (mascota == null)
+        {
+            throw new KeyNotFoundException($"La mascota con id {mascotaId} no fue encontrada.");
+        }
+
+        if (!currentUserRole.Equals("Admin", StringComparison.OrdinalIgnoreCase) &&
+            !currentUserRole.Equals("Veterinario", StringComparison.OrdinalIgnoreCase) &&
+            mascota.DueñoId != currentUserId)
+        {
+            throw new UnauthorizedAccessException("Acceso denegado: No tiene permisos para consultar tratamientos de esta mascota.");
+        }
+
+        var allTratamientos = await _unitOfWork.Tratamientos.GetAllWithDetailsAsync(
+            (!currentUserRole.Equals("Admin", StringComparison.OrdinalIgnoreCase) &&
+             !currentUserRole.Equals("Veterinario", StringComparison.OrdinalIgnoreCase))
+                ? currentUserId
+                : null
+        );
+
+        return allTratamientos
+            .Where(t => t.CitaNavigation?.MascotaId == mascotaId)
+            .Select(t => new TratamientoResponseDto
+            {
+                Id = t.Id,
+                CitaId = t.CitaId,
+                MascotaId = t.CitaNavigation?.MascotaId ?? mascotaId,
+                Descripcion = t.Descripcion,
+                Costo = t.Costo,
+                FechaCita = t.CitaNavigation?.Fecha ?? DateTime.MinValue,
+                NombreMascota = t.CitaNavigation?.MascotaNavigation?.Nombre ?? mascota.Nombre
+            });
     }
 
     public async Task<TratamientoResponseDto> CreateAsync(TratamientoCreateDto dto)
@@ -63,6 +121,7 @@ public class TratamientoService : ITratamientoService
         {
             Id = nuevoTratamiento.Id,
             CitaId = nuevoTratamiento.CitaId,
+            MascotaId = cita.MascotaId,
             Descripcion = nuevoTratamiento.Descripcion,
             Costo = nuevoTratamiento.Costo,
             FechaCita = cita.Fecha,
