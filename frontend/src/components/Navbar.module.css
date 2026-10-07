@@ -1,0 +1,161 @@
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 32px;
+  height: 64px;
+  background: rgba(3, 7, 18, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+
+/* ─── Marca ──────────────────────────────────────────────────────────────── */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.brandIcon { font-size: 1.4rem; line-height: 1; }
+
+.brandName {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--cv-text-primary);
+  letter-spacing: -0.2px;
+}
+
+/* ─── Links de navegación ────────────────────────────────────────────────── */
+.links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.navLink {
+  padding: 12px 12px; /* ≥ 44px de área táctil vertical (WCAG 2.5.5) */
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--cv-text-secondary);
+  text-decoration: none;
+  transition: color 0.15s, background 0.15s;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.navLink:hover {
+  color: var(--cv-text-primary);
+  background: var(--cv-surface);
+}
+
+.navLinkActive {
+  color: var(--cv-primary) !important;
+  background: var(--cv-primary-bg) !important;
+  font-weight: 600;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+}
+
+/* ─── Área de usuario ────────────────────────────────────────────────────── */
+.userArea {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--cv-border);
+  padding: 4px 12px 4px 6px;
+  border-radius: 9999px;
+}
+
+.roleBadge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  border: 1px solid currentColor;
+}
+
+.userName {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--cv-text-primary);
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btnIconAction {
+  min-height: 38px;
+  min-width: 38px;
+  padding: 0;
+  border-radius: 8px;
+  border: 1px solid var(--cv-border);
+  background: var(--cv-card);
+  color: var(--cv-text-secondary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.btnIconAction:hover {
+  background: var(--cv-surface);
+  color: var(--cv-primary);
+  border-color: var(--cv-border-hover);
+}
+
+/* ─── Botón logout ───────────────────────────────────────────────────────── */
+.btnLogout {
+  min-height: 38px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--cv-border);
+  background: var(--cv-card);
+  color: var(--cv-text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btnLogout:hover {
+  background: var(--cv-danger-bg);
+  border-color: var(--cv-danger-border);
+  color: var(--cv-danger);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .nav { padding: 0 12px; gap: 8px; overflow-x: auto; max-width: 100vw; }
+  .brandName { display: none; }
+  .userName { display: none; }
+  .navLink { padding: 6px 8px; font-size: 0.8rem; }
+}

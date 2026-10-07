@@ -1,0 +1,614 @@
+/* ═══════════════════════════════════════════════════════════════
+   CitaList — Tailwind CSS Inspired Style
+   ═══════════════════════════════════════════════════════════════ */
+
+.page {
+  padding: 36px 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: calc(100vh - 60px);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.badgePill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.badgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+}
+
+.title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--cv-text-primary);
+  margin: 0;
+  letter-spacing: -0.03em;
+}
+
+.subtitle {
+  font-size: 0.88rem;
+  color: var(--cv-text-muted);
+  margin: 6px 0 0;
+}
+
+.btnNew {
+  min-height: 42px;
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.btnNew:hover {
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+}
+
+/* ── Tabla de citas ───────────────────────────────────────────── */
+.tableWrapper {
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid var(--cv-border);
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.table th {
+  background: rgba(30, 41, 59, 0.5);
+  color: #94a3b8;
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.9rem 1.1rem;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--cv-border);
+}
+
+.table td {
+  padding: 0.95rem 1.1rem;
+  border-top: 1px solid var(--cv-border);
+  color: var(--cv-text-primary);
+  vertical-align: middle;
+}
+
+.table tr:hover td {
+  background: rgba(30, 41, 59, 0.35);
+}
+
+.mascotaInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.mascotaHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.speciesIconWrapper {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mascotaNombre {
+  font-weight: 700;
+  color: var(--cv-text-primary);
+  font-size: 0.92rem;
+}
+
+.mascotaEsp {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-left: 36px;
+}
+
+.fecha {
+  white-space: nowrap;
+  color: #94a3b8;
+  font-size: 0.84rem;
+}
+
+.motivo {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--cv-text-secondary);
+}
+
+.badgeTratBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 9999px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #38bdf8;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.badgeTratBtn:hover {
+  background: #0284c7;
+  color: #fff;
+  border-color: #38bdf8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+}
+
+.badgeTratZero {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(30, 41, 59, 0.5);
+  border-radius: 9999px;
+  padding: 3px 9px;
+  font-size: 0.78rem;
+  color: #64748b;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.costo {
+  font-weight: 700;
+  color: #38bdf8;
+  white-space: nowrap;
+}
+
+/* ── Acciones por fila ────────────────────────────────────────── */
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.btnIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--cv-border);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: rgba(30, 41, 59, 0.5);
+}
+
+.btnView {
+  color: #38bdf8;
+}
+
+.btnView:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: #38bdf8;
+}
+
+.btnEdit {
+  color: #94a3b8;
+}
+
+.btnEdit:hover {
+  background: rgba(148, 163, 184, 0.15);
+  color: #f8fafc;
+  border-color: #94a3b8;
+}
+
+.btnDel {
+  color: #fb7185;
+}
+
+.btnDel:hover {
+  background: rgba(244, 63, 94, 0.15);
+  border-color: #fb7185;
+}
+
+/* ── Estados vacío / error / carga ───────────────────────────── */
+.empty, .error, .loading {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  color: var(--cv-text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.mutedIcon {
+  color: #475569;
+}
+
+.centerState {
+  text-align: center;
+  padding: 36px 16px;
+  color: var(--cv-text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.skeletonRow {
+  height: 52px;
+  background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+  border-radius: 8px;
+  margin: 6px 0;
+  animation: shimmer 1.4s infinite linear;
+}
+
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+/* ── Paginación ───────────────────────────────────────────────── */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  color: var(--cv-text-muted);
+}
+
+.pageBtns {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pageBtn {
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--cv-border);
+  background: rgba(15, 23, 42, 0.75);
+  color: var(--cv-text-primary);
+  cursor: pointer;
+  font-size: 0.84rem;
+  transition: all 0.15s;
+}
+
+.pageBtn:hover:not(:disabled) {
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+.pageBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.pageCurrent {
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  background: rgba(56, 189, 248, 0.15);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  font-weight: 700;
+  font-size: 0.84rem;
+}
+
+/* ── Modal overlay ────────────────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  width: 100%;
+  max-width: 520px;
+  padding: 24px;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.modalTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--cv-text-primary);
+  margin: 0 0 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+/* ── Panel de detalle (tratamientos) ──────────────────────────── */
+.detailPanel {
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  width: 100%;
+  max-width: 620px;
+  padding: 24px;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.detailHeader {
+  margin-bottom: 1.25rem;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modalBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  padding: 2px 8px;
+  border-radius: 9999px;
+  margin-bottom: 6px;
+}
+
+.detailTitle {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--cv-text-primary);
+  margin: 0 0 4px;
+  letter-spacing: -0.02em;
+}
+
+.detailSub {
+  font-size: 0.82rem;
+  color: var(--cv-text-muted);
+}
+
+.btnClose {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--cv-text-muted);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.btnClose:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--cv-text-primary);
+}
+
+.tratList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.tratCard {
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.tratDesc {
+  font-size: 0.9rem;
+  color: var(--cv-text-primary);
+  font-weight: 500;
+}
+
+.tratCosto {
+  font-weight: 700;
+  color: #38bdf8;
+  white-space: nowrap;
+}
+
+.tratMeta {
+  font-size: 0.76rem;
+  color: var(--cv-text-muted);
+  margin-top: 0.2rem;
+}
+
+/* ── Formulario ──────────────────────────────────────────────── */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input, .select, .textarea {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--cv-border);
+  background: rgba(30, 41, 59, 0.6);
+  color: var(--cv-text-primary);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus, .select:focus, .textarea:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
+
+.inputError {
+  border-color: #fb7185 !important;
+}
+
+.fieldError {
+  font-size: 0.76rem;
+  color: #fb7185;
+  margin: 0;
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.formActions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+.btnPrimary {
+  padding: 0.65rem 1.4rem;
+  border-radius: 8px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  cursor: pointer;
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  padding: 0.65rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid var(--cv-border);
+  background: rgba(30, 41, 59, 0.4);
+  color: var(--cv-text-secondary);
+  cursor: pointer;
+  font-size: 0.88rem;
+  transition: all 0.15s;
+}
+
+.btnSecondary:hover {
+  background: var(--cv-surface);
+  color: var(--cv-text-primary);
+}
+
+.btnDanger {
+  padding: 0.65rem 1.4rem;
+  border-radius: 8px;
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  cursor: pointer;
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.3);
+}
+
+.btnDanger:hover:not(:disabled) {
+  background: #f43f5e;
+}
+
+.alertError {
+  background: rgba(244, 63, 94, 0.1);
+  border: 1px solid rgba(244, 63, 94, 0.25);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #fb7185;
+  padding: 0.65rem 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.duenoInfo {
+  font-size: 0.82rem;
+  color: #94a3b8;
+}
+
+@media (max-width: 640px) {
+  .page { padding: 1.25rem; }
+  .title { font-size: 1.4rem; }
+  .header { flex-direction: column; align-items: flex-start; }
+}
