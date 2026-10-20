@@ -63,15 +63,35 @@ function normalizeError(error: AxiosError): ApiError {
   if (error.response) {
     // El servidor respondió con un código de error (4xx, 5xx)
     const data = error.response.data as Record<string, unknown>;
+    const fieldErrors = data?.errors as Record<string, string[]> | undefined;
+
+    let msg =
+      (data?.detail as string) ||
+      (data?.mensaje as string) ||
+      (data?.title as string);
+
+    // Traducir mensajes estándar de ASP.NET Core a español claro
+    if (!msg || msg.toLowerCase().includes('validation errors occurred') || msg.toLowerCase().includes('one or more')) {
+      if (fieldErrors && Object.keys(fieldErrors).length > 0) {
+        const firstKey = Object.keys(fieldErrors)[0];
+        msg = fieldErrors[firstKey]?.[0] || 'Por favor revisa los campos señalados en el formulario.';
+      } else {
+        msg = 'Ocurrieron errores de validación. Por favor revisa los datos ingresados.';
+      }
+    } else if (error.response.status === 401 && (!msg || msg.toLowerCase().includes('unauthorized'))) {
+      msg = 'Credenciales incorrectas o sesión expirada.';
+    } else if (error.response.status === 403 && (!msg || msg.toLowerCase().includes('forbidden'))) {
+      msg = 'No tienes permisos suficientes para realizar esta acción.';
+    } else if (error.response.status === 404 && (!msg || msg.toLowerCase().includes('not found'))) {
+      msg = 'El recurso solicitado no fue encontrado.';
+    } else if (error.response.status === 429) {
+      msg = 'Has superado el límite de peticiones permitidas. Espera un momento.';
+    }
+
     return {
       status: error.response.status,
-      message:
-        (data?.detail as string) ||
-        (data?.mensaje as string) ||
-        (data?.title as string) ||
-        `Error ${error.response.status}`,
-
-      errors: data?.errors as Record<string, string[]> | undefined,
+      message: msg || `Error ${error.response.status}`,
+      errors: fieldErrors,
     };
   }
 

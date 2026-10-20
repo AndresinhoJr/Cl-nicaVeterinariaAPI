@@ -85,14 +85,14 @@ export function MascotaForm({
   // Sincronizar errores de campo del servidor con React Hook Form
   useEffect(() => {
     if (!serverFieldErrors) return;
-    const fieldMap: Record<string, keyof MascotaFormValues> = {
-      Nombre: 'nombre',
-      Especie: 'especie',
-      DuenoId: 'duenoId',
-    };
     Object.entries(serverFieldErrors).forEach(([backendField, messages]) => {
-      const rhfField = fieldMap[backendField];
-      if (rhfField) {
+      const key = backendField.toLowerCase().trim();
+      let rhfField: keyof MascotaFormValues | undefined;
+      if (key === 'nombre') rhfField = 'nombre';
+      else if (key === 'especie') rhfField = 'especie';
+      else if (key.includes('due') || key === 'duenoid') rhfField = 'duenoId';
+
+      if (rhfField && messages && messages.length > 0) {
         setError(rhfField, { type: 'server', message: messages[0] });
       }
     });

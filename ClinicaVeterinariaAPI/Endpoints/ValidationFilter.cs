@@ -26,7 +26,10 @@ public class ValidationFilter<T> : IEndpointFilter where T : class
                         errors[key] = [.. errors[key], result.ErrorMessage ?? "Error de validación"];
                     }
                 }
-                return Results.ValidationProblem(errors);
+                return Results.ValidationProblem(
+                    errors, 
+                    title: "Ocurrieron uno o más errores de validación.", 
+                    detail: "Por favor revisa y corrige los campos del formulario antes de continuar.");
             }
         }
         return await next(context);
