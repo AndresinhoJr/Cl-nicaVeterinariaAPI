@@ -13,7 +13,6 @@ import {
   PillIcon,
   EditIcon,
   TrashIcon,
-  PlusIcon,
   EyeIcon,
   CloseIcon,
   getSpeciesIcon,
@@ -147,7 +146,7 @@ export function CitaList() {
         {/* Solo Admin y Veterinario pueden crear citas */}
         {isAdminOrVet && (
           <button className={styles.btnNew} onClick={openCreate} id="btn-nueva-cita">
-            <PlusIcon size={16} /> Nueva cita
+            Nueva Cita
           </button>
         )}
       </header>
@@ -169,7 +168,7 @@ export function CitaList() {
         <div className={styles.empty}>
           <CalendarIcon size={36} className={styles.mutedIcon} />
           <span>No hay citas registradas.</span>
-          {isAdminOrVet && <button className={styles.btnNew} onClick={openCreate}><PlusIcon size={16} /> Crear primera cita</button>}
+          {isAdminOrVet && <button className={styles.btnNew} onClick={openCreate}>Crear primera cita</button>}
         </div>
       )}
 

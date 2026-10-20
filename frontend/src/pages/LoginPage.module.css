@@ -1,18 +1,16 @@
-/* ─── Layout split-panel - Tailwind Dark Theme ──────────────────────────── */
+/* ─── Layout split-panel — Future Imperfect Editorial Style ──────────────── */
 .page {
   display: flex;
   min-height: 100vh;
-  background: #020617;
-  color: #f8fafc;
+  background: var(--cv-bg);
+  color: var(--cv-text-primary);
 }
 
 /* ─── Panel izquierdo (Hero branding) ───────────────────────────────────── */
 .aside {
   width: 44%;
-  background: radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.12), transparent 40%),
-              radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.15), transparent 50%),
-              #0b0f19;
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border-right: 1px solid var(--cv-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,8 +26,8 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
   background-size: 32px 32px;
   pointer-events: none;
 }
@@ -37,7 +35,7 @@
 .asideContent {
   position: relative;
   z-index: 1;
-  max-width: 380px;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -46,33 +44,31 @@
 .logoBox {
   width: 56px;
   height: 56px;
-  border-radius: 16px;
-  background: rgba(56, 189, 248, 0.1);
-  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 6px;
+  background: var(--cv-primary-bg);
+  border: 1px solid rgba(46, 186, 174, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 25px rgba(56, 189, 248, 0.2);
 }
 
 .asideTitle {
   font-size: 2.25rem;
   font-weight: 800;
-  color: #f8fafc;
+  color: var(--cv-text-primary);
   margin: 0;
-  letter-spacing: -0.04em;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
   line-height: 1.15;
 }
 
 .brandGradient {
-  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--cv-primary-dark);
 }
 
 .asideDesc {
   font-size: 0.95rem;
-  color: #94a3b8;
+  color: var(--cv-text-secondary);
   line-height: 1.6;
   margin: 0;
 }
@@ -89,12 +85,14 @@
   align-items: center;
   gap: 6px;
   padding: 4px 12px;
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #cbd5e1;
+  background: var(--cv-surface);
+  border: 1px solid var(--cv-border);
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cv-text-secondary);
 }
 
 .roleDot {
@@ -113,21 +111,19 @@
   justify-content: center;
   padding: 48px 32px;
   gap: 20px;
-  background: #020617;
+  background: var(--cv-bg);
   position: relative;
 }
 
 /* ─── Card del formulario ────────────────────────────────────────────────── */
 .card {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid var(--cv-border);
+  border-radius: 6px;
   padding: 40px 36px;
   width: 100%;
   max-width: 440px;
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -137,19 +133,22 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--cv-border);
 }
 
 .cardTitle {
-  font-size: 1.65rem;
+  font-size: 1.5rem;
   font-weight: 800;
-  color: #f8fafc;
-  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cv-text-primary);
   margin: 0;
 }
 
 .cardSub {
   font-size: 0.875rem;
-  color: #94a3b8;
+  color: var(--cv-text-muted);
   margin: 0;
 }
 
@@ -159,11 +158,12 @@
   align-items: center;
   gap: 10px;
   padding: 10px 14px;
-  background: rgba(244, 63, 94, 0.1);
-  border: 1px solid rgba(244, 63, 94, 0.25);
-  border-radius: 10px;
-  color: #fda4af;
+  background: var(--cv-danger-bg);
+  border: 1px solid var(--cv-danger-border);
+  border-radius: 4px;
+  color: var(--cv-danger);
   font-size: 0.85rem;
+  font-weight: 600;
   animation: shakeX 0.4s ease;
 }
 
@@ -195,9 +195,11 @@
 }
 
 .label {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: #cbd5e1;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cv-text-secondary);
   text-align: left;
 }
 
@@ -205,10 +207,10 @@
   width: 100%;
   padding: 0.65rem 0.95rem;
   font-size: 0.875rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  background: rgba(30, 41, 59, 0.6);
-  color: #f8fafc;
+  border: 1px solid var(--cv-border);
+  border-radius: 4px;
+  background: #ffffff;
+  color: var(--cv-text-primary);
   outline: none;
   transition: all 0.2s ease;
   box-sizing: border-box;
@@ -216,27 +218,27 @@
 }
 
 .input::placeholder {
-  color: #64748b;
+  color: var(--cv-text-muted);
 }
 
 .input:focus {
-  border-color: #38bdf8;
-  background: rgba(30, 41, 59, 0.95);
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+  border-color: var(--cv-primary);
+  box-shadow: 0 0 0 3px var(--cv-primary-glow);
 }
 
 .inputError {
-  border-color: #f43f5e !important;
-  background: rgba(244, 63, 94, 0.08) !important;
+  border-color: var(--cv-danger) !important;
+  background: var(--cv-danger-bg) !important;
 }
 
 .inputError:focus {
-  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.2) !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2) !important;
 }
 
 .fieldError {
   font-size: 0.8rem;
-  color: #fb7185;
+  font-weight: 600;
+  color: var(--cv-danger);
   margin: 0;
   text-align: left;
 }
@@ -245,27 +247,29 @@
 .btnSubmit {
   width: 100%;
   padding: 0.75rem 1.25rem;
-  border-radius: 10px;
-  border: 1px solid rgba(56, 189, 248, 0.4);
-  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  border-radius: 4px;
+  border: 1px solid var(--cv-primary-dark);
+  background: var(--cv-primary);
   color: #ffffff;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   font-family: inherit;
   margin-top: 6px;
-  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 6px rgba(46, 186, 174, 0.25);
 }
 
 .btnSubmit:hover:not(:disabled) {
-  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+  background: var(--cv-primary-dark);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+  box-shadow: 0 4px 12px rgba(46, 186, 174, 0.35);
 }
 
 .btnSubmit:disabled {
@@ -292,8 +296,8 @@
 .cardFooter {
   text-align: center;
   font-size: 0.8125rem;
-  color: #94a3b8;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--cv-text-secondary);
+  border-top: 1px solid var(--cv-border);
   padding-top: 1rem;
 }
 
@@ -307,20 +311,21 @@
   width: 100%;
   max-width: 440px;
   padding: 10px 14px;
-  background: rgba(15, 23, 42, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
+  background: #ffffff;
+  border: 1px solid var(--cv-border);
+  border-radius: 4px;
   font-size: 0.775rem;
-  color: #94a3b8;
+  color: var(--cv-text-secondary);
   text-align: left;
   line-height: 1.5;
   display: flex;
   align-items: flex-start;
   gap: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .tokenNote strong {
-  color: #f1f5f9;
+  color: var(--cv-text-primary);
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -328,11 +333,12 @@
 
 .tokenNote code {
   font-size: 0.75rem;
-  background: rgba(56, 189, 248, 0.12);
-  border: 1px solid rgba(56, 189, 248, 0.2);
+  background: var(--cv-surface);
+  border: 1px solid var(--cv-border);
   padding: 1px 5px;
-  border-radius: 4px;
-  color: #38bdf8;
+  border-radius: 3px;
+  color: var(--cv-primary-dark);
+  font-weight: 600;
 }
 
 /* ─── Responsive ─────────────────────────────────────────────────────────── */
@@ -345,7 +351,7 @@
     width: 100%;
     padding: 36px 24px;
     border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid var(--cv-border);
   }
 
   .asideTitle {

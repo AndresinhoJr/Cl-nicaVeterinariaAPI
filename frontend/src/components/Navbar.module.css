@@ -1,42 +1,50 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   NAVBAR — Future Imperfect Editorial Header
+   Limpio, fondo blanco nítido, tipografía con letter-spacing, alto contraste
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 .nav {
   display: flex;
   align-items: center;
   gap: 24px;
   padding: 0 32px;
   height: 64px;
-  background: rgba(3, 7, 18, 0.8);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border-bottom: 1px solid var(--cv-border);
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
-
 
 /* ─── Marca ──────────────────────────────────────────────────────────────── */
 .brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   text-decoration: none;
   flex-shrink: 0;
 }
 
-.brandIcon { font-size: 1.4rem; line-height: 1; }
+.brandIcon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
 
 .brandName {
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-size: 0.88rem;
+  font-weight: 800;
   color: var(--cv-text-primary);
-  letter-spacing: -0.2px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-family: 'Source Sans 3', 'Inter', sans-serif;
 }
 
 /* ─── Links de navegación ────────────────────────────────────────────────── */
 .links {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -44,36 +52,39 @@
 }
 
 .navLink {
-  padding: 12px 12px; /* ≥ 44px de área táctil vertical (WCAG 2.5.5) */
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--cv-text-secondary);
   text-decoration: none;
-  transition: color 0.15s, background 0.15s;
+  transition: all 0.15s ease;
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
+  min-height: 40px;
+  border: 1px solid transparent;
 }
 
 .navLink:hover {
   color: var(--cv-text-primary);
   background: var(--cv-surface);
+  border-color: var(--cv-border);
 }
 
 .navLinkActive {
-  color: var(--cv-primary) !important;
+  color: var(--cv-primary-dark) !important;
   background: var(--cv-primary-bg) !important;
-  font-weight: 600;
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+  font-weight: 700;
+  border-color: rgba(46, 186, 174, 0.3) !important;
 }
 
 /* ─── Área de usuario ────────────────────────────────────────────────────── */
 .userArea {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   flex-shrink: 0;
 }
 
@@ -81,24 +92,24 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--cv-surface);
   border: 1px solid var(--cv-border);
   padding: 4px 12px 4px 6px;
-  border-radius: 9999px;
+  border-radius: 4px;
 }
 
 .roleBadge {
-  font-size: 0.7rem;
-  font-weight: 700;
+  font-size: 0.68rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 3px 8px;
-  border-radius: 9999px;
+  letter-spacing: 0.12em;
+  padding: 2px 7px;
+  border-radius: 3px;
   border: 1px solid currentColor;
 }
 
 .userName {
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--cv-text-primary);
   max-width: 150px;
@@ -111,9 +122,9 @@
   min-height: 38px;
   min-width: 38px;
   padding: 0;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid var(--cv-border);
-  background: var(--cv-card);
+  background: #ffffff;
   color: var(--cv-text-secondary);
   cursor: pointer;
   display: inline-flex;
@@ -124,7 +135,7 @@
 
 .btnIconAction:hover {
   background: var(--cv-surface);
-  color: var(--cv-primary);
+  color: var(--cv-primary-dark);
   border-color: var(--cv-border-hover);
 }
 
@@ -132,12 +143,14 @@
 .btnLogout {
   min-height: 38px;
   padding: 6px 14px;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid var(--cv-border);
-  background: var(--cv-card);
+  background: #ffffff;
   color: var(--cv-text-secondary);
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s;
   font-family: inherit;
@@ -157,5 +170,5 @@
   .nav { padding: 0 12px; gap: 8px; overflow-x: auto; max-width: 100vw; }
   .brandName { display: none; }
   .userName { display: none; }
-  .navLink { padding: 6px 8px; font-size: 0.8rem; }
+  .navLink { padding: 6px 8px; font-size: 0.72rem; }
 }

@@ -7,16 +7,15 @@ import {
   StethoscopeIcon,
   UserIcon,
   ShieldIcon,
-  PlusIcon,
   CloseIcon,
   AlertIcon
 } from '../components/common/Icons';
 import styles from './AdminPage.module.css';
 
 const ROL_STYLE: Record<string, { bg: string; color: string; border: string }> = {
-  Admin:       { bg: 'rgba(245, 158, 11, 0.12)', color: '#fbbf24', border: 'rgba(245, 158, 11, 0.25)' },
-  Veterinario: { bg: 'rgba(16, 185, 129, 0.12)', color: '#34d399', border: 'rgba(16, 185, 129, 0.25)' },
-  Cliente:     { bg: 'rgba(56, 189, 248, 0.12)', color: '#38bdf8', border: 'rgba(56, 189, 248, 0.25)' },
+  Admin:       { bg: '#fef3c7', color: '#b45309', border: '#fde68a' },
+  Veterinario: { bg: '#d1fae5', color: '#047857', border: '#a7f3d0' },
+  Cliente:     { bg: '#e0f2fe', color: '#0369a1', border: '#bae6fd' },
 };
 
 export default function AdminPage() {
@@ -116,7 +115,7 @@ export default function AdminPage() {
           className={styles.btnNew}
           onClick={() => { setShowModalVet(true); setModalError(null); }}
         >
-          <PlusIcon size={16} />
+          <UserIcon size={16} />
           Registrar Veterinario
         </button>
       </header>

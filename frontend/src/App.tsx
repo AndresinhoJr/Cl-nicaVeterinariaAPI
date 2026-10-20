@@ -51,7 +51,7 @@ function AppRoutes() {
     <Routes>
       {/* ── Rutas públicas ─────────────────────────────────────────────── */}
       <Route path="/login"        element={<LoginPage />} />
-      <Route path="/registro"     element={<Navigate to="/login" replace />} />
+      <Route path="/registro"     element={<RegisterPage />} />
       <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
       {/* ── Rutas protegidas: cualquier usuario autenticado ─────────────── */}

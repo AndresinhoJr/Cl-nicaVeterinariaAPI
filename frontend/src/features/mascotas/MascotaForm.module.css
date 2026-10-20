@@ -1,4 +1,4 @@
-/* ─── Layout del formulario - Tailwind Slate Theme ──────────────────────── */
+/* ─── Layout del formulario — Future Imperfect Editorial Style ──────────────── */
 .form {
   display: flex;
   flex-direction: column;
@@ -7,9 +7,10 @@
 
 .title {
   font-size: 1.35rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: #f8fafc;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--cv-text-primary);
   margin: 0;
 }
 
@@ -21,26 +22,30 @@
 }
 
 .label {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: #cbd5e1;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cv-text-secondary);
   text-align: left;
 }
 
 .required {
-  color: #fb7185;
+  color: var(--cv-danger);
   margin-left: 2px;
 }
 
 .optional {
-  font-weight: 400;
-  color: #64748b;
-  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--cv-text-muted);
+  font-size: 0.72rem;
+  text-transform: none;
+  letter-spacing: normal;
 }
 
 .fieldHint {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--cv-text-muted);
   margin: 0;
   text-align: left;
   line-height: 1.4;
@@ -65,10 +70,10 @@
   min-height: 42px;
   padding: 0.65rem 0.9rem;
   font-size: 0.875rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  background: rgba(30, 41, 59, 0.6);
-  color: #f8fafc;
+  border: 1px solid var(--cv-border);
+  border-radius: 4px;
+  background: #ffffff;
+  color: var(--cv-text-primary);
   transition: all 0.2s ease;
   box-sizing: border-box;
   font-family: inherit;
@@ -77,28 +82,27 @@
 }
 
 .input::placeholder {
-  color: #64748b;
+  color: var(--cv-text-muted);
 }
 
 .input:focus,
 .select:focus {
-  border-color: #38bdf8;
-  background: rgba(30, 41, 59, 0.95);
-  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+  border-color: var(--cv-primary);
+  box-shadow: 0 0 0 3px var(--cv-primary-glow);
 }
 
 .inputError {
-  border-color: #f43f5e !important;
-  background: rgba(244, 63, 94, 0.08) !important;
+  border-color: var(--cv-danger) !important;
+  background: var(--cv-danger-bg) !important;
 }
 
 .inputError:focus {
-  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.2) !important;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2) !important;
 }
 
 .select {
   cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2394a3b8'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2364748b'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 14px center;
   background-size: 16px;
@@ -108,7 +112,8 @@
 /* ─── Errores de campo — WCAG 3.3.1 ─────────────────────────────────────── */
 .fieldError {
   font-size: 0.8rem;
-  color: #fb7185;
+  font-weight: 600;
+  color: var(--cv-danger);
   min-height: 1.2em;
   margin: 0;
   display: flex;
@@ -131,11 +136,12 @@
   align-items: center;
   gap: 0.6rem;
   padding: 0.75rem 1rem;
-  border-radius: 10px;
-  background: rgba(244, 63, 94, 0.1);
-  border: 1px solid rgba(244, 63, 94, 0.25);
-  color: #fda4af;
+  border-radius: 4px;
+  background: var(--cv-danger-bg);
+  border: 1px solid var(--cv-danger-border);
+  color: var(--cv-danger);
   font-size: 0.85rem;
+  font-weight: 600;
   text-align: left;
 }
 
@@ -150,35 +156,39 @@
   gap: 0.75rem;
   justify-content: flex-end;
   margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--cv-border);
 }
 
 .btnPrimary,
 .btnSecondary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   min-height: 42px;
-  padding: 0.65rem 1.3rem;
-  border-radius: 10px;
-  font-size: 0.875rem;
-  font-weight: 600;
+  padding: 0.65rem 1.4rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: none;
   font-family: inherit;
 }
 
 .btnPrimary {
-  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
-  border: 1px solid rgba(56, 189, 248, 0.4);
+  background: var(--cv-primary);
+  border: 1px solid var(--cv-primary-dark);
   color: #ffffff;
-  box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 6px rgba(46, 186, 174, 0.25);
 }
 
 .btnPrimary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+  background: var(--cv-primary-dark);
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+  box-shadow: 0 4px 12px rgba(46, 186, 174, 0.35);
 }
 
 .btnPrimary:disabled {
@@ -188,14 +198,15 @@
 }
 
 .btnSecondary {
-  background: transparent;
-  color: #94a3b8;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #ffffff;
+  color: var(--cv-text-secondary);
+  border: 1px solid var(--cv-border);
 }
 
 .btnSecondary:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.05);
-  color: #f8fafc;
+  background: var(--cv-surface);
+  color: var(--cv-text-primary);
+  border-color: var(--cv-border-hover);
 }
 
 /* ─── Spinner en botón ───────────────────────────────────────────────────── */

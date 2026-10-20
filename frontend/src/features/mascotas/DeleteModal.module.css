@@ -1,9 +1,8 @@
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -18,9 +17,9 @@
 }
 
 .modal {
-  background: #0f172a;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid var(--cv-border);
+  border-radius: 6px;
   padding: 2rem 1.75rem;
   width: 100%;
   max-width: 440px;
@@ -28,7 +27,7 @@
   flex-direction: column;
   align-items: center;
   gap: 1.25rem;
-  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -40,10 +39,10 @@
 .iconWrap {
   width: 56px;
   height: 56px;
-  border-radius: 14px;
-  background: rgba(244, 63, 94, 0.12);
-  border: 1px solid rgba(244, 63, 94, 0.25);
-  color: #fb7185;
+  border-radius: 6px;
+  background: var(--cv-danger-bg);
+  border: 1px solid var(--cv-danger-border);
+  color: var(--cv-danger);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,34 +50,36 @@
 
 .title {
   font-size: 1.25rem;
-  font-weight: 700;
-  color: #f8fafc;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cv-text-primary);
   margin: 0;
   text-align: center;
-  letter-spacing: -0.02em;
 }
 
 .desc {
   font-size: 0.875rem;
-  color: #94a3b8;
+  color: var(--cv-text-secondary);
   text-align: center;
   margin: 0;
   line-height: 1.5;
 }
 
 .name {
-  color: #f8fafc;
-  font-weight: 600;
+  color: var(--cv-danger);
+  font-weight: 700;
 }
 
 .error {
   width: 100%;
   padding: 0.75rem 1rem;
-  border-radius: 10px;
-  background: rgba(244, 63, 94, 0.1);
-  border: 1px solid rgba(244, 63, 94, 0.25);
-  color: #fda4af;
+  border-radius: 4px;
+  background: var(--cv-danger-bg);
+  border: 1px solid var(--cv-danger-border);
+  color: var(--cv-danger);
   font-size: 0.8125rem;
+  font-weight: 600;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -97,6 +98,8 @@
   gap: 0.75rem;
   width: 100%;
   margin-top: 0.5rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--cv-border);
 }
 
 .btnCancel,
@@ -104,38 +107,40 @@
   flex: 1;
   min-height: 42px;
   padding: 0.65rem 1.25rem;
-  border-radius: 10px;
-  font-size: 0.875rem;
-  font-weight: 600;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: none;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  font-family: inherit;
 }
 
 .btnCancel {
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #94a3b8;
+  background: #ffffff;
+  border: 1px solid var(--cv-border);
+  color: var(--cv-text-secondary);
 }
 
 .btnCancel:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.05);
-  color: #f8fafc;
+  background: var(--cv-surface);
+  color: var(--cv-text-primary);
 }
 
 .btnDelete {
-  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
-  border: 1px solid rgba(244, 63, 94, 0.4);
+  background: var(--cv-danger);
+  border: 1px solid var(--cv-danger-dark);
   color: #ffffff;
-  box-shadow: 0 4px 14px rgba(225, 29, 72, 0.3);
+  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.25);
 }
 
 .btnDelete:hover:not(:disabled) {
-  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+  background: var(--cv-danger-dark);
   transform: translateY(-1px);
 }
 

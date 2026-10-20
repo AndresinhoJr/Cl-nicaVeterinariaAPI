@@ -8,7 +8,6 @@ import type { CitaResponse } from '../../types/cita.types';
 import {
   PillIcon,
   SearchIcon,
-  PlusIcon,
   TrashIcon,
   CloseIcon,
   AlertIcon,
@@ -149,7 +148,7 @@ export function TratamientoList() {
             className={styles.btnNew}
             onClick={() => { setShowModal(true); setModalError(null); }}
           >
-            <PlusIcon size={16} />
+            <PillIcon size={16} />
             Nuevo Tratamiento
           </button>
         )}

@@ -7,7 +7,7 @@ import type { MascotaResponse } from '../../types/mascota.types';
 import { useAuth } from '../../context/AuthContext';
 import { getClientes, crearCliente, type ClienteSummary } from '../../services/auth.service';
 import { isApiError } from '../../api/axiosClient';
-import { EditIcon, PlusIcon, AlertIcon, CloseIcon } from '../../components/common/Icons';
+import { EditIcon, AlertIcon, CloseIcon, GenericPetIcon } from '../../components/common/Icons';
 import styles from './MascotaForm.module.css';
 
 interface MascotaFormProps {
@@ -166,16 +166,16 @@ export function MascotaForm({
         <div style={{
           width: '34px',
           height: '34px',
-          borderRadius: '9px',
-          background: 'rgba(56, 189, 248, 0.12)',
-          border: '1px solid rgba(56, 189, 248, 0.25)',
-          color: '#38bdf8',
+          borderRadius: '4px',
+          background: 'var(--cv-primary-bg)',
+          border: '1px solid rgba(46, 186, 174, 0.3)',
+          color: 'var(--cv-primary-dark)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           flexShrink: 0
         }}>
-          {isEditing ? <EditIcon size={16} /> : <PlusIcon size={16} />}
+          {isEditing ? <EditIcon size={16} /> : <GenericPetIcon size={16} />}
         </div>
         <h2 className={styles.title}>
           {isEditing ? 'Editar Mascota' : 'Nueva Mascota'}
@@ -275,14 +275,15 @@ export function MascotaForm({
               style={{
                 background: 'transparent',
                 border: 'none',
-                color: '#38bdf8',
-                fontSize: '0.8125rem',
-                fontWeight: 600,
+                color: 'var(--cv-primary-dark)',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                letterSpacing: '0.04em',
                 cursor: 'pointer',
                 padding: '2px 4px',
               }}
             >
-              + Inscribir nuevo cliente
+              Inscribir nuevo cliente
             </button>
           </div>
           <select
@@ -326,8 +327,8 @@ export function MascotaForm({
               style={{
                 position: 'fixed',
                 inset: 0,
-                backgroundColor: 'rgba(0, 0, 0, 0.75)',
-                backdropFilter: 'blur(8px)',
+                backgroundColor: 'rgba(15, 23, 42, 0.45)',
+                backdropFilter: 'blur(4px)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -340,29 +341,29 @@ export function MascotaForm({
             >
               <div
                 style={{
-                  background: '#0f172a',
-                  border: '1px solid rgba(255, 255, 255, 0.12)',
-                  borderRadius: '20px',
+                  background: '#ffffff',
+                  border: '1px solid var(--cv-border)',
+                  borderRadius: '6px',
                   padding: '1.75rem',
                   maxWidth: '440px',
                   width: '100%',
-                  boxShadow: '0 25px 60px -15px rgba(0, 0, 0, 0.7)',
+                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.12)',
                 }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                  <h3 style={{ margin: 0, color: '#f8fafc', fontSize: '1.2rem', fontWeight: 700 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid var(--cv-border)', paddingBottom: '0.75rem' }}>
+                  <h3 style={{ margin: 0, color: 'var(--cv-text-primary)', fontSize: '1.15rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                     Inscribir Nuevo Cliente
                   </h3>
                   <button
                     type="button"
                     onClick={() => setShowNewClientModal(false)}
-                    style={{ background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer', display: 'flex' }}
+                    style={{ background: 'transparent', border: 'none', color: 'var(--cv-text-muted)', cursor: 'pointer', display: 'flex' }}
                     aria-label="Cerrar modal"
                   >
                     <CloseIcon size={18} />
                   </button>
                 </div>
-                <p style={{ margin: '0 0 1.25rem', fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.5 }}>
+                <p style={{ margin: '0 0 1.25rem', fontSize: '0.85rem', color: 'var(--cv-text-secondary)', lineHeight: 1.5 }}>
                   Ingresa los datos del dueño. Sus credenciales le permitirán acceder al portal de la clínica.
                 </p>
 
@@ -371,13 +372,14 @@ export function MascotaForm({
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.5rem',
-                    background: 'rgba(244, 63, 94, 0.1)',
-                    border: '1px solid rgba(244, 63, 94, 0.25)',
-                    color: '#fda4af',
+                    background: 'var(--cv-danger-bg)',
+                    border: '1px solid var(--cv-danger-border)',
+                    color: 'var(--cv-danger)',
                     padding: '0.65rem 0.9rem',
-                    borderRadius: '10px',
+                    borderRadius: '4px',
                     fontSize: '0.8125rem',
-                    marginBottom: '1rem'
+                    marginBottom: '1rem',
+                    fontWeight: 600
                   }}>
                     <AlertIcon size={16} />
                     <span>{newClientError}</span>

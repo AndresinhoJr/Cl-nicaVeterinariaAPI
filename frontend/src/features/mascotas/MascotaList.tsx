@@ -15,7 +15,6 @@ import {
   PillIcon,
   EditIcon,
   TrashIcon,
-  PlusIcon,
   CloseIcon,
   FilterIcon,
   getSpeciesIcon,
@@ -70,65 +69,64 @@ interface MascotaCardProps {
   deleteBtnRef?: React.RefObject<HTMLButtonElement>;
 }
 function getSpeciesTheme(especie: string) {
-
   const norm = (especie || '').toLowerCase().trim();
   if (norm.includes('perr') || norm.includes('can')) {
     return {
-      avatarBg: 'rgba(56, 189, 248, 0.12)',
-      avatarBorder: 'rgba(56, 189, 248, 0.28)',
-      avatarColor: '#38bdf8',
-      badgeBg: 'rgba(56, 189, 248, 0.1)',
-      badgeBorder: 'rgba(56, 189, 248, 0.25)',
-      badgeColor: '#38bdf8',
+      avatarBg: '#f0f9ff',
+      avatarBorder: '#bae6fd',
+      avatarColor: '#0284c7',
+      badgeBg: '#e0f2fe',
+      badgeBorder: '#bae6fd',
+      badgeColor: '#0369a1',
     };
   }
   if (norm.includes('gat') || norm.includes('felin')) {
     return {
-      avatarBg: 'rgba(52, 211, 153, 0.12)',
-      avatarBorder: 'rgba(52, 211, 153, 0.28)',
-      avatarColor: '#34d399',
-      badgeBg: 'rgba(52, 211, 153, 0.1)',
-      badgeBorder: 'rgba(52, 211, 153, 0.25)',
-      badgeColor: '#34d399',
+      avatarBg: '#ecfdf5',
+      avatarBorder: '#a7f3d0',
+      avatarColor: '#059669',
+      badgeBg: '#d1fae5',
+      badgeBorder: '#a7f3d0',
+      badgeColor: '#047857',
     };
   }
   if (norm.includes('av') || norm.includes('pajar')) {
     return {
-      avatarBg: 'rgba(251, 191, 36, 0.12)',
-      avatarBorder: 'rgba(251, 191, 36, 0.28)',
-      avatarColor: '#fbbf24',
-      badgeBg: 'rgba(251, 191, 36, 0.1)',
-      badgeBorder: 'rgba(251, 191, 36, 0.25)',
-      badgeColor: '#fbbf24',
+      avatarBg: '#fffbeb',
+      avatarBorder: '#fde68a',
+      avatarColor: '#d97706',
+      badgeBg: '#fef3c7',
+      badgeBorder: '#fde68a',
+      badgeColor: '#b45309',
     };
   }
   if (norm.includes('conej') || norm.includes('roed')) {
     return {
-      avatarBg: 'rgba(192, 132, 252, 0.12)',
-      avatarBorder: 'rgba(192, 132, 252, 0.28)',
-      avatarColor: '#c084fc',
-      badgeBg: 'rgba(192, 132, 252, 0.1)',
-      badgeBorder: 'rgba(192, 132, 252, 0.25)',
-      badgeColor: '#c084fc',
+      avatarBg: '#faf5ff',
+      avatarBorder: '#e9d5ff',
+      avatarColor: '#9333ea',
+      badgeBg: '#f3e8ff',
+      badgeBorder: '#e9d5ff',
+      badgeColor: '#7e22ce',
     };
   }
   if (norm.includes('rept') || norm.includes('iguan') || norm.includes('tortug')) {
     return {
-      avatarBg: 'rgba(45, 212, 191, 0.12)',
-      avatarBorder: 'rgba(45, 212, 191, 0.28)',
-      avatarColor: '#2dd4bf',
-      badgeBg: 'rgba(45, 212, 191, 0.1)',
-      badgeBorder: 'rgba(45, 212, 191, 0.25)',
-      badgeColor: '#2dd4bf',
+      avatarBg: '#f0fdfa',
+      avatarBorder: '#99f6e4',
+      avatarColor: '#0d9488',
+      badgeBg: '#ccfbf1',
+      badgeBorder: '#99f6e4',
+      badgeColor: '#0f766e',
     };
   }
   return {
-    avatarBg: 'rgba(148, 163, 184, 0.12)',
-    avatarBorder: 'rgba(148, 163, 184, 0.28)',
-    avatarColor: '#94a3b8',
-    badgeBg: 'rgba(148, 163, 184, 0.1)',
-    badgeBorder: 'rgba(148, 163, 184, 0.25)',
-    badgeColor: '#94a3b8',
+    avatarBg: '#f8fafc',
+    avatarBorder: '#e2e8f0',
+    avatarColor: '#475569',
+    badgeBg: '#f1f5f9',
+    badgeBorder: '#cbd5e1',
+    badgeColor: '#334155',
   };
 }
 
@@ -520,7 +518,7 @@ export function MascotaList() {
             onClick={handleCreate}
             aria-haspopup="dialog"
           >
-            <PlusIcon size={16} /> Nueva mascota
+            Nueva Mascota
           </button>
         )}
       </header>
