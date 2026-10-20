@@ -295,10 +295,26 @@ export function CitaList() {
           onClick={(e) => { if (e.target === overlayRef.current) closeModal(); }}
         >
           <div className={styles.modal}>
-            <h2 className={styles.modalTitle}>{editingCita ? '✏️ Editar cita' : '📅 Nueva cita médica'}</h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.5rem' }}>
+              <div style={{
+                width: '34px',
+                height: '34px',
+                borderRadius: '9px',
+                background: 'rgba(56, 189, 248, 0.12)',
+                border: '1px solid rgba(56, 189, 248, 0.25)',
+                color: '#38bdf8',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}>
+                {editingCita ? <EditIcon size={16} /> : <CalendarIcon size={16} />}
+              </div>
+              <h2 className={styles.modalTitle}>{editingCita ? 'Editar Cita Médica' : 'Nueva Cita Médica'}</h2>
+            </div>
 
             {mutation.error && (
-              <div className={styles.alertError} role="alert">⚠️ {mutation.error}</div>
+              <div className={styles.alertError} role="alert">{mutation.error}</div>
             )}
 
             <form id="cita-form" className={styles.form} onSubmit={onSubmitCita} noValidate>
@@ -315,8 +331,8 @@ export function CitaList() {
                     <option value="">— Selecciona una mascota —</option>
                     {mascotas.map((m) => (
                       <option key={m.id} value={m.id}>
-                        {ESPECIE_EMOJI[m.especie] ?? '🐾'} {m.nombre} ({m.especie})
-                        {isAdminOrVet ? ` — ${m.nombreDueno ?? (m as any).nombreDueño}` : ''}
+                        {m.nombre} ({m.especie})
+                        {isAdminOrVet && (m.nombreDueno || (m as any).nombreDueño) ? ` — Dueño: ${m.nombreDueno ?? (m as any).nombreDueño}` : ''}
                       </option>
                     ))}
                   </select>
@@ -374,7 +390,23 @@ export function CitaList() {
           aria-label="Confirmar eliminación de cita"
         >
           <div className={styles.modal}>
-            <h2 className={styles.modalTitle}>🗑️ Eliminar cita</h2>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.5rem' }}>
+              <div style={{
+                width: '34px',
+                height: '34px',
+                borderRadius: '9px',
+                background: 'rgba(239, 68, 68, 0.12)',
+                border: '1px solid rgba(239, 68, 68, 0.25)',
+                color: '#ef4444',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}>
+                <TrashIcon size={16} />
+              </div>
+              <h2 className={styles.modalTitle}>Eliminar Cita Médica</h2>
+            </div>
             <p style={{ color: 'var(--cv-text-muted)', marginBottom: '1.25rem', fontSize: '0.9rem' }}>
               ¿Estás seguro que deseas eliminar la cita de{' '}
               <strong>{deletingCita.nombreMascota}</strong> del{' '}
