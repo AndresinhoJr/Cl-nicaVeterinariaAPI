@@ -123,16 +123,18 @@ app.MapCitaEndpoints();
 app.MapTratamientoEndpoints();
 app.MapRolEndpoints();
 
-// Seed de usuario Administrador en desarrollo si no existe
+// Seed y sincronización de usuarios demo en desarrollo
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetService<ClinicaDbContext>();
     if (context != null && !app.Environment.IsEnvironment("Testing"))
     {
+        var hasher = new Microsoft.AspNetCore.Identity.PasswordHasher<Usuario>();
+
+        // 1. Admin
         var admin = context.Usuarios.FirstOrDefault(u => u.Email == "admin@veterinaria.com");
         if (admin == null)
         {
-            var hasher = new Microsoft.AspNetCore.Identity.PasswordHasher<Usuario>();
             var newAdmin = new Usuario
             {
                 Nombre = "Administrador",
@@ -141,8 +143,33 @@ using (var scope = app.Services.CreateScope())
             };
             newAdmin.PasswordHash = hasher.HashPassword(newAdmin, "admin123");
             context.Usuarios.Add(newAdmin);
-            context.SaveChanges();
         }
+        else
+        {
+            admin.PasswordHash = hasher.HashPassword(admin, "admin123");
+        }
+
+        // 2. Veterinario Dr. Juan Perez
+        var vet = context.Usuarios.FirstOrDefault(u => u.Email == "juan.perez@veterinaria.com");
+        if (vet != null)
+        {
+            vet.PasswordHash = hasher.HashPassword(vet, "vet123");
+        }
+
+        // 3. Clientes Demo
+        var maria = context.Usuarios.FirstOrDefault(u => u.Email == "maria.gonzalez@gmail.com");
+        if (maria != null)
+        {
+            maria.PasswordHash = hasher.HashPassword(maria, "cliente123");
+        }
+
+        var carlos = context.Usuarios.FirstOrDefault(u => u.Email == "carlos.tapia@gmail.com");
+        if (carlos != null)
+        {
+            carlos.PasswordHash = hasher.HashPassword(carlos, "cliente123");
+        }
+
+        context.SaveChanges();
     }
 }
 
