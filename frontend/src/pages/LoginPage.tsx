@@ -31,6 +31,8 @@ export default function LoginPage() {
       if (isApiError(err)) {
         if (err.status === 401) {
           setServerError('Credenciales incorrectas. Verifica tu usuario y contraseña.');
+        } else if (err.status === 429) {
+          setServerError('Demasiados intentos fallidos. Por seguridad, espera 1 minuto antes de volver a intentarlo.');
         } else if (err.status === 0) {
           setServerError('Sin conexión con el servidor. Verifica tu red.');
         } else {

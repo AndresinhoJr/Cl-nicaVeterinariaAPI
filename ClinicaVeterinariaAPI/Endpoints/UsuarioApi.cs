@@ -14,7 +14,7 @@ public static class UsuarioApi
         var group = routes.MapGroup("/api/v1/usuarios")
             .WithTags("Usuarios y Autenticación");
 
-        // Login (público)
+        // Login (público) - Protegido contra fuerza bruta por Rate Limiting (OWASP: 5 req/min)
         group.MapPost("/login", async ([FromBody] LoginRequestDto request, IAuthService authService) =>
         {
             var response = await authService.LoginAsync(request);
@@ -25,11 +25,13 @@ public static class UsuarioApi
 
             return Results.Ok(response);
         })
+        .RequireRateLimiting("PasswordRatePolicy")
         .WithName("LoginUsuario")
         .WithValidation<LoginRequestDto>()
         .Produces<LoginResponseDto>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status400BadRequest)
-        .Produces(StatusCodes.Status401Unauthorized);
+        .Produces(StatusCodes.Status401Unauthorized)
+        .Produces(StatusCodes.Status429TooManyRequests);
 
         // Registro heredado (se mantiene por compatibilidad)
         group.MapPost("/registro", async ([FromBody] RegisterRequestDto request, IAuthService authService) =>
@@ -37,10 +39,12 @@ public static class UsuarioApi
             var response = await authService.RegisterAsync(request);
             return Results.Created("/api/v1/usuarios", response);
         })
+        .RequireRateLimiting("PasswordRatePolicy")
         .WithName("RegistroUsuario")
         .WithValidation<RegisterRequestDto>()
         .Produces<LoginResponseDto>(StatusCodes.Status201Created)
-        .Produces(StatusCodes.Status400BadRequest);
+        .Produces(StatusCodes.Status400BadRequest)
+        .Produces(StatusCodes.Status429TooManyRequests);
 
         // Obtener clientes registrados (Admin y Veterinario)
         group.MapGet("/clientes", async (IUnitOfWork unitOfWork) =>
@@ -102,7 +106,7 @@ public static class UsuarioApi
         .Produces(StatusCodes.Status401Unauthorized)
         .Produces(StatusCodes.Status403Forbidden);
 
-        // Cambiar contraseña (Cualquier usuario autenticado)
+        // Cambiar contraseña (Cualquier usuario autenticado) - Protegido contra fuerza bruta por Rate Limiting
         group.MapPut("/cambiar-password", async (
             [FromBody] CambiarPasswordDto request, 
             ClaimsPrincipal user, 
@@ -118,10 +122,12 @@ public static class UsuarioApi
             return Results.Ok(new { mensaje = "Contraseña actualizada exitosamente." });
         })
         .RequireAuthorization()
+        .RequireRateLimiting("PasswordRatePolicy")
         .WithName("CambiarPassword")
         .WithValidation<CambiarPasswordDto>()
         .Produces(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status400BadRequest)
-        .Produces(StatusCodes.Status401Unauthorized);
+        .Produces(StatusCodes.Status401Unauthorized)
+        .Produces(StatusCodes.Status429TooManyRequests);
     }
 }

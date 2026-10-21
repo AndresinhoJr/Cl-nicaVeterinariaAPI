@@ -30,6 +30,11 @@ export default defineConfig({
     // URL base del servidor de desarrollo
     baseURL: 'http://localhost:5173',
 
+    // Header para tests E2E automatizados
+    extraHTTPHeaders: {
+      'X-E2E-Test': 'true',
+    },
+
     // Capturar trazas al fallar (para depuración)
     trace: 'on-first-retry',
 

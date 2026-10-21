@@ -147,4 +147,22 @@ describe('LoginPage', () => {
       expect(screen.getByText(/sin conexión con el servidor/i)).toBeInTheDocument();
     });
   });
+
+  // ─── Error 429 Rate Limiting ──────────────────────────────────────────────
+
+  it('muestra mensaje de rate limiting si login lanza ApiError con status 429', async () => {
+    const mockLogin = vi.fn().mockRejectedValue(
+      makeApiError(429, 'Has superado el límite de intentos permitidos.')
+    );
+    vi.mocked(useAuth).mockReturnValue({ ...defaultAuthMock(), login: mockLogin });
+
+    const { user } = setup();
+    await user.type(screen.getByLabelText(/usuario o correo/i), 'admin@test.com');
+    await user.type(screen.getByLabelText(/contraseña/i), 'password123');
+    await user.click(screen.getByRole('button', { name: /iniciar sesión/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/demasiados intentos fallidos/i)).toBeInTheDocument();
+    });
+  });
 });

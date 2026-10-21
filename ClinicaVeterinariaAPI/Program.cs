@@ -51,6 +51,25 @@ builder.Services.AddAuthorization();
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+    // Política de Rate Limiting para contraseñas y autenticación (OWASP / NIST: 5 intentos por minuto por IP)
+    options.AddPolicy("PasswordRatePolicy", context =>
+    {
+        var isE2E = context.Request.Headers.ContainsKey("X-E2E-Test");
+        var ip = context.Request.Headers["X-Forwarded-For"].FirstOrDefault()
+                 ?? context.Connection.RemoteIpAddress?.ToString()
+                 ?? "anonimo";
+
+        return RateLimitPartition.GetFixedWindowLimiter(
+            partitionKey: isE2E ? $"{ip}-{Guid.NewGuid()}" : ip,
+            factory: _ => new FixedWindowRateLimiterOptions
+            {
+                PermitLimit = 5,
+                Window = TimeSpan.FromMinutes(1),
+                QueueLimit = 0
+            });
+    });
+
     options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context =>
     {
         var ip = context.Connection.RemoteIpAddress?.ToString() ?? "anonimo";
@@ -63,6 +82,17 @@ builder.Services.AddRateLimiter(options =>
                 QueueLimit = 0
             });
     });
+
+    options.OnRejected = async (context, token) =>
+    {
+        context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+        context.HttpContext.Response.ContentType = "application/json";
+        await context.HttpContext.Response.WriteAsJsonAsync(new
+        {
+            status = 429,
+            mensaje = "Has superado el límite de intentos permitidos. Por seguridad, espera 1 minuto antes de volver a intentarlo."
+        }, cancellationToken: token);
+    };
 });
 
 

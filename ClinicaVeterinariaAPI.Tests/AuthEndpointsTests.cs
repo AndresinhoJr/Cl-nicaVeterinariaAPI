@@ -75,5 +75,38 @@ public class AuthEndpointsTests : IClassFixture<CustomWebApplicationFactory>
         Assert.False(string.IsNullOrWhiteSpace(result.Token));
         Assert.Equal("Cliente", result.Rol);
     }
+
+    [Fact]
+    public async Task Post_Login_ExcedeLimiteDeIntentos_Retorna429TooManyRequests()
+    {
+        // Arrange: Cliente con IP aislada para verificar Rate Limiting de 5 intentos por minuto
+        using var isolatedClient = _client;
+        var requestMessageFactory = () =>
+        {
+            var req = new HttpRequestMessage(HttpMethod.Post, "/api/v1/usuarios/login")
+            {
+                Content = JsonContent.Create(new LoginRequestDto
+                {
+                    Email = "bruteforce_test@veterinaria.com",
+                    Password = "ClaveIncorrecta123"
+                })
+            };
+            req.Headers.Add("X-Forwarded-For", "203.0.113.195");
+            return req;
+        };
+
+        HttpResponseMessage? response = null;
+
+        // Act: Enviar 6 peticiones consecutivas (el límite estándar OWASP es 5)
+        for (int i = 0; i < 6; i++)
+        {
+            using var request = requestMessageFactory();
+            response = await _client.SendAsync(request);
+        }
+
+        // Assert: El 6to intento es bloqueado con HTTP 429 Too Many Requests
+        Assert.NotNull(response);
+        Assert.Equal(HttpStatusCode.TooManyRequests, response.StatusCode);
+    }
 }
 
